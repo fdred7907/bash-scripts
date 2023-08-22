@@ -1,0 +1,21 @@
+#!/bin/bash
+
+#program to spoof hours activity to protect max active system time from snoop
+
+for i in {0..23}; do hours[i]=0; done
+
+for file in $( ls ); do
+    if [[ -f $file ]]; then
+        hr=$( stat -c "%y" ${file} | cut -c 12-13 )
+        hr_spoof=(hr+5)%23
+        ((++hours[hr_spoof]))
+    else
+        continue
+    fi
+done
+
+for i in {0..23}; do 
+    echo "${i}: ${hours[i]}"
+done
+
+

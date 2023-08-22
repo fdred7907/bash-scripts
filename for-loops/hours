@@ -1,0 +1,27 @@
+#!/bin/bash
+
+#script to find when system was most active with reagrds to pwd
+
+# DIR=$(pwd)
+
+#initialize count array
+for i in {0..23}; do hour[i]=0; done
+
+for file in $( ls ); do
+    if [[ -f $file ]];then
+        hr=$( stat -c "%y" ${file} | cut -c 12-13 )
+        (( ++hour[hr] ))
+    else 
+        continue
+    fi
+done
+
+for i in {0..23};
+    do
+        echo "$i:   ${hour[i]} ";
+    done
+
+
+    
+
+

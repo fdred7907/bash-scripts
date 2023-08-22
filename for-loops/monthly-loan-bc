@@ -1,0 +1,84 @@
+#!/bin/bash
+
+#calculate monthly loans with discounted formula
+
+PROGNAME=$(basename $0)
+
+usage() {
+    cat <<- EOF
+        Usage: $PROGNAME int | PRINCIPAL INTEREST MONTHS
+
+        Here:
+        int : switch to interactive mode to enter arguments interactively
+            or
+        PRINCIPAL : Original Sum Borrowed
+        MONTHS : Tenure of the loan
+        INTEREST : APR of the loan
+
+EOF
+}
+
+if [[ $1 != 'int' ]]; then
+
+
+    if (( $# != 3 )); then
+        usage
+        exit 1
+    fi
+
+    if ! [[ $1 =~ ^[0-9]+.?[0-9]*$ ]]; then
+        usage
+        exit 1
+    fi
+
+    if ! [[ $2 =~ ^[0-9]+.?[0-9]*$ ]]; then
+        usage
+        exit 1
+    fi
+
+    if ! [[ $3 =~ ^[0-9]+$ ]] || [[ $3 -lt 0 ]] ; then
+        usage 
+        exit 1
+    fi
+
+    principal=$1
+    interest=$2
+    months=$3
+fi
+
+if [[ $1 = 'int' ]]; then 
+
+    principal=
+    interest=
+    months=
+    until [[ $principal =~ ^[0-9]+.?[0-9]*$ ]]; do 
+        echo "Enter the Princpal amount borrowed as a number:"
+        read principal
+    done
+
+    until [[ $interest =~ ^[0-9]+.?[0-9]*$ ]];do
+        echo "Enter the Interest Rate (APR) :"
+        read interest
+    done
+    until [[ $months =~ ^[0-9]+$ ]] && [[ $months -gt 0 ]] ; do
+        echo "Enter the tenure of the loan in months:"
+        read months
+    done
+fi
+
+
+
+
+bc <<- EOF
+    scale = 10
+    i = $interest/12
+    p = $principal
+    m = $months
+    a = p * (( i * (( i + 1) ^ m)) / ((( i + 1 ) ^ m ) - 1))
+    print a,"\n"
+EOF
+
+
+
+
+

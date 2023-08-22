@@ -1,0 +1,10 @@
+for i in A B C D; do echo $i; done
+
+#via brace expansion
+
+for j in {A..D};
+ do
+
+ echo $j; 
+
+ done

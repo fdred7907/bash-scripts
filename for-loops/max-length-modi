@@ -1,0 +1,19 @@
+#!/bin/bash
+
+#longest word in a file refactored
+
+
+for i; do
+    if [[ -r $i ]]; then
+        max_word=
+        max_len=0
+        for j in $(strings $i); do 
+            len=$( echo $j | wc -c)
+            if (( len > max_len)); then
+                max_word=$j
+                max_len=$len
+            fi
+        done
+        echo "$i: '$max_word' ($max_len) letters"
+    fi
+done
