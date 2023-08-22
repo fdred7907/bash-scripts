@@ -1,0 +1,12 @@
+total 4
+-rw-r--r-- 1 kali kali 15 Aug 22 08:14 foo.txt
+-rw-r--r-- 1 kali kali  0 Aug 22 08:17 output.txt
+Listing of foo.txt
+Hello
+Hi there
+total 8
+-rw-r--r-- 1 kali kali  15 Aug 22 08:14 foo.txt
+-rw-r--r-- 1 kali kali 139 Aug 22 08:17 output.txt
+Listing of foo.txt
+Hello
+Hi there

@@ -1,0 +1,46 @@
+#!/bin/bash
+
+#print owner , group owner, and number of files of each owner and group
+
+declare -A owners
+declare -A groups
+
+for file in $( ls $1); 
+    do
+    # if [[ -f $file ]]; then
+
+        owner=$( stat -c "%U" $1/$file )
+        group=$( stat -c "%G" $1/$file )
+        if ! [[ $owners[${owner}] ]];then
+            owners[$owner]=1
+        else
+            ((owners[$owner]++))
+        fi
+        if ! [[ ${groups[$group]} ]];then
+            groups[$group]=1
+        else
+            ((groups[$group]++))    
+        fi
+        printf "%-60s " $1/$file 
+        printf "%s %s \n" $owner $group
+    # else
+    # continue
+    # fi
+    done
+    echo "===================================================================="
+    echo "User Owners: "
+    
+for owner in ${!owners[@]}; do
+    echo "$owner owns ${owners[$owner]} files/dirs."
+    done
+    echo "===================================================================="
+    echo "Group Owners: "
+    
+for group in ${!groups[@]};do
+    echo "$group owns ${groups[$group]} files/dirs."
+    done
+
+
+
+
+

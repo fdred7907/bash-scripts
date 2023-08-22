@@ -1,0 +1,10 @@
+#!/bin/bash
+
+#to sort array
+
+a=(f g a c d b e)
+
+a_sorted=($(for i in ${a[@]}; do echo $i;done | sort))
+echo "Original Array: ${a[@]}"
+echo "Sorted Array: ${a_sorted[@]}"
+
